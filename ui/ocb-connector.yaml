@@ -1,0 +1,194 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocb-connector
+  labels:
+    app: ocb-connector
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ocb-connector
+  template:
+    metadata:
+      labels:
+        app: ocb-connector
+    spec:
+      containers:
+        - name: ocb-connector
+          image: ghcr.io/atlantidapa/ocb-connector:20240606
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ENCRYPT_CONFIG_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: ConfigKey
+            - name: ENCRYPT_DATABASE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: DatabaseKey
+            - name: ENCRYPT_URL_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: URLKey
+            - name: JAVA_OPTS
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: JAVA_OPTS
+            - name: TZ
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: TZ
+
+            - name: spring.profiles.active
+              value: platform
+            - name: ocb.console.unsecure
+              value: 'true'
+            - name: server.ssl.enabled
+              value: 'false'
+            - name: SERVER_SSL_KEYSTORE_PASSWORD
+              value: 'ocbconnector12345'
+            - name: SERVER_PORT
+              value: '8080'
+            - name: MAIL_HOST
+              value: 'smtp.gmail.com'
+            - name: MAIL_PORT
+              value: '587'
+            - name: MAIL_USERNAME
+              value: 'ocbappqa@gmail.com'
+            - name: SPRING_MAIL_USERNAME
+              value: 'ocbappqa@gmail.com'
+            - name: MAIL_PASSWORD
+              value: 'wmmpflhhkdnttsop'
+            - name: SPRING_MAIL_PASSWORD
+              value: 'wmmpflhhkdnttsop'
+            - name: LOGGING_FILE_NAME
+              value: 'connnector-gateway.log'
+            - name: LOGGING_LEVEL_CONNECTOR
+              value: 'DEBUG'
+            - name: LOGGING_LEVEL_DB
+              value: 'INFO'
+            - name: LOGGING_LEVEL_SPRING
+              value: 'DEBUG'
+            - name: LOGGING_LEVEL_TOMCAT
+              value: 'INFO'
+            - name: banking.backend.type
+              value: 'c4b'
+            - name: spring.datasource.maximumPoolSize
+              value: '80'
+
+            # Notification props
+            - name: notification.email.provider
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: email_provider
+            - name: notification.email.senderemail
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: sender_email
+            - name: notification.email.sendername
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: sender_name
+            - name: notification.email.imageoption
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: email_logo_option
+            - name: notification.email.httpimage
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: email_logo_http_url
+            - name: notification.email.binaryimage
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: email_logo_binary_data
+
+            - name: BANKSIM_DB_MAXCONNECTIONS
+              value: '50'
+            - name: BANKSIM_DB_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: db_type
+
+            - name: DB_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: db_type
+
+            #HANA db props
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: hana_dbname
+
+            - name: SPRING_DATASOURCE_JDBCURL
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: hana_jdbcUrl
+
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: ocb-configmap
+                  key: hana_driver_class_name
+
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: ocb-hana-secret
+                  key: hana-username
+
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ocb-hana-secret
+                  key: hana-password
+
+          resources:
+            requests:
+              cpu: "2000m"
+              memory: "2000Mi"
+            limits:
+              cpu: "2500m"
+              memory: "3000Mi"
+          volumeMounts:
+            - name: logfile-vol
+              mountPath: /ocb-data
+      volumes:
+        - name: logfile-vol
+          configMap:
+            name: ocb-configmap
+      imagePullSecrets:
+         - name: ocb-dockerconfigjson-github-com
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ocb-connectorservice
+spec:
+  selector:
+    app: ocb-connector
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+
+---
