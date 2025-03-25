@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ocb-ui
+  labels:
+    app: ocb-ui
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ocb-ui
+  template:
+    metadata:
+      labels:
+        app: ocb-ui
+    spec:
+      containers:
+        - name: ocb-ui
+          image: ghcr.io/atlantidapa/ocb-ui-retail:20240613
+          imagePullPolicy: Always
+          ports:
+            - name: tomcat-port
+              containerPort: 8080
+
+          resources:
+            requests:
+              cpu: "1000m"
+              memory: "1000Mi"
+            limits:
+              cpu: "2000m"
+              memory: "2000Mi"
+
+      imagePullSecrets:
+         - name: ocb-dockerconfigjson-github-com
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ocb-ui-service
+spec:
+  selector:
+    app: ocb-ui
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+
+---

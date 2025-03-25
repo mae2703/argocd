@@ -1,0 +1,327 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ocb-configmap
+data:
+  db_type: HANA
+  hana_dialect: org.eclipse.persistence.platform.database.HANAPlatform
+  hana_driver_class_name: com.sap.db.jdbc.Driver
+  hana_jdbcUrl: jdbc:sap://10.165.0.52:30015?encrypt=true&validateCertificate=false&currentschema=PRD_RETAIL
+  hana_dbname: PRD_RETAIL
+  hana_dbhost: 10.165.0.52
+  hana_dbport: '30015'
+  datasource_poolsize: "100"
+  datasource_leakDetectionTimeInMS: "120000"
+  app_dest_url: ws://ocb-connectorservice:8080/ocbconnector/messagebroker
+  app_dest_rest_url: http://ocb-connectorservice:8080/ocbconnector/api/
+  app_dest_url_bc: ws://ocb-connectorservice-bc:8080/ocbconnector/messagebroker
+  app_dest_rest_url_bc: http://ocb-connectorservice-bc:8080/ocbconnector/api
+  ocb.connectorlib.enable: 'true'
+  ocb.connectorlib.delegatebpw: 'true'
+  ocb_basic_pass: password123
+  ocb_basic_user: testuser1
+  TZ: America/Panama
+  JAVA_OPTS: >-
+            -Duser.language=en
+            -Duser.region=US
+            -Dlogback.configurationFile=/ocb-data/logback.xml
+            -XX:MinRAMPercentage=25.0
+            -XX:MaxRAMPercentage=70.0
+            -Xms2096m
+            -Xmx5144m
+            -XX:+UseG1GC
+            -XX:GCTimeRatio=8
+            -XX:MaxGCPauseMillis=350
+            -XX:MinHeapFreeRatio=10
+            -XX:MaxHeapFreeRatio=25
+            -XX:+TieredCompilation
+            -XX:AdaptiveSizePolicyWeight=80
+            -XX:ConcGCThreads=6
+            -XX:+UseCompressedOops
+            -XX:+UseStringDeduplication
+            -Djava.security.egd=file:/dev/./urandom
+            -Doak.documentMK.maxServerTimeDiffMillis=3000
+            -Dfdb.deployment.cloud=true
+            -Dcom.sun.management.jmxremote
+            -XX:+PrintCommandLineFlags
+            -XX:+OptimizeStringConcat
+            --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+            --add-opens=java.base/java.lang.invoke=ALL-UNNAMED
+            --add-opens=java.base/java.net=ALL-UNNAMED
+            --add-opens=java.base/java.nio=ALL-UNNAMED
+            --add-opens=java.base/java.nio.charset=ALL-UNNAMED
+            --add-opens=java.base/java.text=ALL-UNNAMED
+            --add-opens=java.base/java.time=ALL-UNNAMED
+            --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED
+            --add-opens=java.prefs/java.util.prefs=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.catalog=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.datatype=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.namespace=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.parsers=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.stream=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.stream.events=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.stream.util=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.transform=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.transform.dom=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.transform.sax=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.transform.stax=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.transform.stream=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.validation=ALL-UNNAMED
+            --add-opens=java.xml/javax.xml.xpath=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.bootstrap=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.events=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.ls=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.ranges=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.traversal=ALL-UNNAMED
+            --add-opens=java.xml/org.w3c.dom.views=ALL-UNNAMED
+            --add-opens=java.xml/org.xml.sax=ALL-UNNAMED
+            --add-opens=java.xml/org.xml.sax.ext=ALL-UNNAMED
+            --add-opens=java.xml/org.xml.sax.helpers=ALL-UNNAMED
+            --add-opens=java.naming/javax.naming=ALL-UNNAMED
+            --add-opens=java.base/sun.nio.ch=ALL-UNNAMED
+            --add-opens=java.management/sun.management=ALL-UNNAMED
+            --add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED
+            --add-modules=java.se
+            --add-exports=java.base/jdk.internal.ref=ALL-UNNAMED
+
+  # HANA - PROD
+  ConfigKey: 5F5233BA073BB0D91B20D6FD84F58E6FD5FC6F4511B8590E3E60F12DB5D76AD8
+  DatabaseKey: 221F170A5ED6E209E0A16B0D9BFB1A6A65AE96E31E5B03EC9C4E133D5D480307
+  URLKey: 1EB0F0AB0120076C66A99025F5E19D3456B2EDD86CFD6B8BB1805AA0A79A0141
+
+  # Notification
+  email_provider: devsoft
+  sender_email: 'no-contestar@pacificbank.pa'
+  sender_name: 'Pacific Online'
+  email_logo_option: http
+  email_logo_http_url: 'https://www.bancatlan.hn/img/header-pb-logo-izquierda-1388x150px-pacific.png'
+  email_logo_binary_data: 'data:image/png;base64,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'
+
+  logback.xml: |
+    <?xml version="1.0" encoding="UTF-8"?>
+    <configuration scan="true" scanPeriod="30 seconds">
+       <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+          <resetJUL>true</resetJUL>
+       </contextListener>
+       <!-- To enable JMX Management -->
+       <jmxConfigurator />
+       <property name="LOG_FILE_NAME" value="ocb_fwk" />
+       <property name="OCB_LOG_FILE" value="${user.dir}/logs/${LOG_FILE_NAME}" />
+       <appender name="LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+          <file>${OCB_LOG_FILE}.log</file>
+          <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+             <fileNamePattern>${OCB_LOG_FILE}.%d{yyyy-MM-dd}.log.%i.zip</fileNamePattern>
+             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+             </timeBasedFileNamingAndTriggeringPolicy>
+          </rollingPolicy>
+          <encoder>
+             <pattern>%1d{yyyy-MM-dd HH:mm:ss}#[%thread]#%-5level#%logger{100}|#%X{ocb.userName}#%X{ocb.randomUUID}| %msg%n</pattern>
+          </encoder>
+       </appender>
+       <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+          <encoder>
+             <pattern>%1d{yyyy-MM-dd HH:mm:ss.SSS}#[%thread]#%-5level#%logger{100}|#%X{ocb.userName}#%X{ocb.randomUUID}| %msg%n</pattern>
+          </encoder>
+       </appender>
+       <!-- Hazelcast logging -->
+       <logger level="ERROR" additivity="false" name="com.hazelcast">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- HikariCP Logging -->
+       <logger level="ERROR" additivity="false" name="com.zaxxer.hikari">
+          <appender-ref ref="console" />
+       </logger>
+       <logger level="DEBUG" additivity="false" name="com.zaxxer.hikari.HikariConfig">
+          <appender-ref ref="console" />
+       </logger>
+       <logger level="DEBUG" additivity="false" name="com.zaxxer.hikari.pool.HikariPool">
+          <appender-ref ref="console" />
+       </logger>
+      <logger level="ERROR" additivity="false" name="com.sap.db.jdbc">
+        <appender-ref ref="console" />
+      </logger>
+       <!-- Sybase ASE logging -->
+       <logger level="ERROR" additivity="false" name="com.sybase.jdbcx">
+          <appender-ref ref="console" />
+       </logger>
+       <logger level="ERROR" additivity="false" name="com.sybase.jdbc4">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.eclipse.gemini.blueprint.extender.internal.activator" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.eclipse.gemini.blueprint.extender.internal.blueprint.activator" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes under umbrella of "org" package are avoided in E2E Trace. -->
+       <logger name="org.hibernate" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes from com.sap.banking.common.odata.mapper are called many times
+                  repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.common.odata.mapper" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes from com.sap.banking.common.interceptors are called many times
+                  repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.common.interceptors" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes from com.sap.banking.authentication.shiro are called many times
+                  repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.authentication.shiro" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes from com.sap.banking.commonconfig.bo are called many times
+                  repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.commonconfig.bo" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- com.ffusion.util.logging is called many times repeatedly.
+                  Hence, avoided in E2E Trace. -->
+       <logger name="com.ffusion.util.logging" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- freemarker.beans is called many times repeatedly.
+                  Hence, avoided in E2E Trace. -->
+       <logger name="freemarker.beans" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- freemarker.cache is called many times repeatedly.
+                  Hence, avoided in E2E Trace. -->
+       <logger name="freemarker.cache" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- com.sap.banking.common.cache.Cache is called many times repeatedly.
+                  Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.common.cache.Cache" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Classes from com.sap.banking.directorydata.interceptors are called
+                  many times repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.directorydata.interceptors" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- com.sap.banking.common.beanmapper.BeanMapperImpl is called many times
+                  repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.common.beanmapper.BeanMapperImpl" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- com.sap.banking.common.odata.application.AbstractApplicationODataServiceFactory
+                  is called many times repeatedly. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.common.odata.application.AbstractApplicationODataServiceFactory" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Below class insert logs in DB. Loggers called from this class will
+                  be in recursive loop. Hence, avoided in E2E Trace. -->
+       <logger name="com.sap.banking.etoetrace.appender.DBLogAppenderImpl" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.felix.scr" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.felix.http.jetty" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.eclipse.jetty" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- START :  Logback Configuration section for org.apache.jackrabbit -->
+       <logger name="org.apache.jackrabbit" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.jackrabbit.oak.plugins.document" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+      <logger name="org.apache.jackrabbit.oak.plugins.document.rdb.RDBDocumentSerializer" level="ERROR" additivity="false">
+        <appender-ref ref="console" />
+      </logger>
+       <!-- For index tooling -->
+       <logger name="org.apache.jackrabbit.oak.index" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.jackrabbit.oak.plugins.index.importer" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.jackrabbit.oak.plugins.index.IndexUpdate" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.jackrabbit.oak.plugins.index.progress" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <logger name="org.apache.jackrabbit.oak.query" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Disable ERRORings caused by JCR-3671 -->
+       <logger name="org.apache.jackrabbit.core.config.ConfigurationErrorHandler" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Display info messages from the benchmark suite -->
+       <logger name="org.apache.jackrabbit.oak.benchmark" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Display info messages from the LastRevRecoveryAgent-->
+       <logger name="org.apache.jackrabbit.oak.plugins.document.LastRevRecoveryAgent" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Display info messages from the scalability suite -->
+       <logger name="org.apache.jackrabbit.oak.scalability" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- Metrics Reporting-->
+       <logger name="org.apache.jackrabbit.oak.metrics" level="ERROR" additivity="false">
+          <appender-ref ref="console" />
+       </logger>
+       <!-- END :  Logback Configuration section for org.apache.jackrabbit -->
+
+      <!-- Custom Logging -->
+      <logger level="TRACE" name="com.sap.banking.db.config.service.provider" additivity="false"> <appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.sap.banking.connector.interceptors" additivity="false"> <appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.ffusion.filters.SecurityFilter" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="ERROR" name="com.sap.banking.common" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="DEBUG" name="com.sap.banking.common.odata.application" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="DEBUG" name="com.sap.banking.common.odata.web.filter.ODataLoggingFilter" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="DEBUG" name="com.sap.banking.alertsengine" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="DEBUG" name="com.sap.banking.common.rpc.AlertsRpcClientImpl" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.sap.banking.business" additivity="false"><appender-ref ref="console" /></logger>
+
+       <logger level="TRACE" name="com.sap.banking.authentication.security.SecurityHandlerImpl" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.sap.banking.endpoint.helper.SecurityEndPointHelperImpl" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.sap.banking.authentication.bo.AuthenticationImpl" additivity="false"><appender-ref ref="console" /></logger>
+
+       <logger level="TRACE" name="com.sap.banking.util.bo.UtilImpl" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.sap.banking.common.provider.CommonConfigImpl" additivity="false"><appender-ref ref="console" /></logger>
+
+       <logger level="INFO" name="org.apache.cxf.services.WebClient" additivity="false"><appender-ref ref="console"/></logger>
+       <logger level="INFO" name="org.apache.cxf.interceptor" additivity="false"><appender-ref ref="console"/></logger>
+       <logger level="DEBUG" name="com.sap.banking.common.rpc" additivity="false"><appender-ref ref="console" /></logger>
+
+       <logger level="TRACE" name="com.sap.banking.businessuser" additivity="false"><appender-ref ref="console" /></logger>
+       <logger level="TRACE" name="com.ffusion.services.entitlements" additivity="false"><appender-ref ref="console" /></logger>
+
+       <!-- Set taglib to TRACE to see the tasks & JSP lines processed -->
+     	<logger level="TRACE" name="com.ffusion.jtf.taglib" additivity="false"><appender-ref ref="console" /></logger>
+     	<logger level="TRACE" name="com.ffusion.services" additivity="false"><appender-ref ref="console" /></logger>
+     	<logger level="TRACE" name="com.ffusion.struts" additivity="false"><appender-ref ref="console" /></logger>
+     	<logger level="TRACE" name="com.ffusion.tasks" additivity="false"><appender-ref ref="console" /></logger>
+     	<logger level="TRACE" name="com.ffusion.util" additivity="false"><appender-ref ref="console" /></logger>
+      <logger level="OFF" name="com.ffusion.util.ReadWriteLock" additivity="false"><appender-ref ref="console" /></logger>
+
+      <turboFilter class="ch.qos.logback.classic.turbo.DynamicThresholdFilter">
+          <Key>E2E_TRACE</Key>
+          <DefaultThreshold>ERROR</DefaultThreshold>
+          <OnHigherOrEqual>ACCEPT</OnHigherOrEqual>
+          <OnLower>NEUTRAL</OnLower>
+          <MDCValueLevelPair>
+             <value>ENABLED</value>
+             <level>ERROR</level>
+          </MDCValueLevelPair>
+       </turboFilter>
+       <!-- Root Level for Logging -->
+       <root level="ERROR">
+          <appender-ref ref="console" />
+       </root>
+    </configuration>

@@ -1,0 +1,17 @@
+﻿kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: ocb-ui-route
+  annotations:
+    haproxy.router.openshift.io/timeout: 30s
+spec:
+  host: ocb-ui-apps-retail-prd.apps.panprdocp.panama.bpgf
+  to:
+    kind: Service
+    name: ocb-ui-service
+    weight: 100
+  port:
+    targetPort: 8080
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
