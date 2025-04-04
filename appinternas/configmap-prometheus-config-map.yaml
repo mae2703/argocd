@@ -33,4 +33,4 @@ data:
         tls_config:
           insecure_skip_verify: true
         static_configs:
-          - targets: ["appweb.infatlan.hn:8085"]
+          - targets: ["appweb.infatlan.hn:8086"]
