@@ -27,7 +27,7 @@ data:
     scrape_configs:
       - job_name: "prometheus"
         static_configs:
-          - targets: ["localhost:9090"]
+          - targets: ["localhost:9095"]
       - job_name: "health_check_metrics"
         scheme: https
         tls_config:
