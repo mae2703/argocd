@@ -1,0 +1,36 @@
+﻿kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: prometheus-config-map
+  namespace: grafana-monitoring
+  uid: c6cdec89-24b8-4a27-bfcb-5bdc2c82e2fc
+  resourceVersion: '1003424391'
+  creationTimestamp: '2025-04-03T21:12:26Z'
+  managedFields:
+    - manager: Mozilla
+      operation: Update
+      apiVersion: v1
+      time: '2025-04-03T21:17:23Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:data':
+          .: {}
+          'f:prometheus.yml': {}
+        'f:immutable': {}
+immutable: false
+data:
+  prometheus.yml: |-
+    global:
+      scrape_interval: 30s 
+      scrape_timeout: 25s
+
+    scrape_configs:
+      - job_name: "prometheus"
+        static_configs:
+          - targets: ["localhost:9090"]
+      - job_name: "health_check_metrics"
+        scheme: https
+        tls_config:
+          insecure_skip_verify: true
+        static_configs:
+          - targets: ["appweb.infatlan.hn:8086"]
